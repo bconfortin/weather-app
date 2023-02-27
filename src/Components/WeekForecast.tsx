@@ -3,13 +3,16 @@ import {FlexContainer} from "../globalStyles";
 
 const WeekForecastContainer = styled(FlexContainer)`
   justify-content: space-between;
+  flex-wrap: wrap;
+  grid-gap: 16px;
 `;
 
 const WeekForecastCard = styled.div`
   padding: 16px;
   border-radius: 16px;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
-  width: calc(12.5% - 16px);
+  min-width: 130px;
+  max-width: 130px;
   background-color: #fff;
 `;
 
