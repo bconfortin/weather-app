@@ -110,7 +110,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
                     console.log(error)
                 });
         }
-    }, [forecastAddress])
+    }, [forecastAddress]);
 
     return (
         <Form onSubmit={handleSubmit}>
