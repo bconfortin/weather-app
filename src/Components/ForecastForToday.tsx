@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {getWeatherIcon} from "../utils";
 
 const ForecastBanner = styled.div`
   width: 100%;
@@ -31,6 +32,13 @@ const ForecastBannerTemperature = styled.div`
     > span {
       font-size: 64px;
       font-weight: 800;
+      display: flex;
+
+      > svg {
+        font-size: 36px;
+        align-self: center;
+        padding-right: 8px;
+      }
     }
   }
 
@@ -98,6 +106,7 @@ interface ForecastForTodayProps {
         windDirection: string;
         name: string;
         detailedForecast: string;
+        shortForecast: string;
     };
     city?: string;
 }
@@ -111,7 +120,8 @@ const ForecastForToday = ({forecastForToday, city}: ForecastForTodayProps) => {
         windSpeed,
         windDirection,
         name,
-        detailedForecast
+        detailedForecast,
+        shortForecast,
     } = forecastForToday || {};
 
     if (!forecastForToday) return null;
@@ -119,7 +129,7 @@ const ForecastForToday = ({forecastForToday, city}: ForecastForTodayProps) => {
     return (
         <ForecastBanner>
             <ForecastBannerTemperature>
-                <div><span>{temperature}</span> º{temperatureUnit}</div>
+                <div><span>{getWeatherIcon(shortForecast)} {temperature}</span> º{temperatureUnit}</div>
             </ForecastBannerTemperature>
             <ForecastBannerConditions>
                 <div>Rain: {probabilityOfPrecipitation?.value}%</div>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {getWeatherIcon} from "../utils";
 
 const WeekForecastContainer = styled.div`
   display: grid;
@@ -19,6 +20,13 @@ const WeekForecastCardTemperature = styled.div`
   font-weight: 700;
   display: flex;
   justify-content: flex-start;
+
+  > svg {
+    font-size: 18px;
+    align-self: center;
+    padding-right: 4px;
+    //color: rgba(0, 0, 0, 0.65);
+  }
 
   > span {
     font-size: 16px;
@@ -46,7 +54,9 @@ const WeekForecast = ({forecastForWeek}: WeatherBannerProps) => {
             {forecastForWeek?.map(({name, temperature, temperatureUnit, shortForecast}, index) => {
                 return (
                     <WeekForecastCard key={index}>
-                        <WeekForecastCardTemperature>{temperature}
+                        <WeekForecastCardTemperature>
+                            {getWeatherIcon(shortForecast)}
+                            {temperature}
                             <span>º{temperatureUnit}</span></WeekForecastCardTemperature>
                         <WeekForecastCardWeekday>{name}</WeekForecastCardWeekday>
                         <WeekForecastCardShortForecast>{shortForecast}</WeekForecastCardShortForecast>

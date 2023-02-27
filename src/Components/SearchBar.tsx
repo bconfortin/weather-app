@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Dispatch, useEffect, useState} from "react";
+import {getSearchButtonIcon} from "../utils";
 
 const Form = styled.form`
   width: 100%;
@@ -26,6 +27,10 @@ const SearchButton = styled.button<{ isLoading?: boolean }>`
   text-transform: uppercase;
   border: 0;
   cursor: ${({isLoading}) => isLoading ? "not-allowed" : "pointer"};
+
+  > svg {
+    padding-right: 4px;
+  }
 `;
 
 interface SearchBarProps {
@@ -118,7 +123,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
             <SearchButton type="submit"
                           disabled={isLoading}
                           isLoading={isLoading}>
-                {isLoading ? "Loading" : isRefresh ? "Refresh" : "Search"}
+                {getSearchButtonIcon(isLoading, isRefresh)}{isLoading ? "Loading" : isRefresh ? "Refresh" : "Search"}
             </SearchButton>
         </Form>
     )
