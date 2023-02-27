@@ -55,7 +55,8 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
         event.preventDefault();
         setIsLoading(true);
         const formattedInput = input.replaceAll(" ", "+");
-        const address = `https://cors-anywhere.herokuapp.com/https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
+        // Running into cors issues in dev mode, so I used this website as a proxy.
+        const address = `${process.env.NODE_ENV !== "production" ? "https://cors-anywhere.herokuapp.com/" : ""}https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
         fetch(address, {
             method: 'GET',
         })
