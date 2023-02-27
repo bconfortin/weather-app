@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import WeatherBanner from "./WeatherBanner";
+import {Container} from "./globalStyles";
+import SearchBar from "./SearchBar";
 import './App.css';
 
-const App = () => (
-    <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Learn React
-            </a>
-        </header>
-    </div>
-);
+const App = () => {
+    const [forecast, setForecast] = useState<Record<string, any>>();
+    const [city, setCity] = useState<string>();
+
+    return (
+        <Container>
+            <SearchBar setForecast={setForecast} setCity={setCity}/>
+            {!!forecast && !!city && <WeatherBanner forecast={forecast} city={city}/>}
+        </Container>
+    );
+}
 
 export default App;
