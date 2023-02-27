@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   max-width: 80%;
   padding: 0 24px;
@@ -18,4 +18,10 @@ export const Container = styled.div`
   @media (max-width: 768px) {
     max-width: 100%;
   }
+`;
+
+export const FlexContainer = styled.div<{ column?: boolean }>`
+  width: 100%;
+  display: flex;
+  flex-direction: ${({column}) => column ? "column" : "row"};
 `;

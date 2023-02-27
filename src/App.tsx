@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import WeatherBanner from "./WeatherBanner";
-import {Container} from "./globalStyles";
+import WeatherBanner from "./Components/WeatherBanner";
+import {MainContainer} from "./globalStyles";
 import SearchBar from "./SearchBar";
 import './App.css';
 
@@ -9,10 +9,10 @@ const App = () => {
     const [city, setCity] = useState<string>();
 
     return (
-        <Container>
+        <MainContainer>
             <SearchBar setForecast={setForecast} setCity={setCity}/>
             {!!forecast && !!city && <WeatherBanner forecast={forecast} city={city}/>}
-        </Container>
+        </MainContainer>
     );
 }
 

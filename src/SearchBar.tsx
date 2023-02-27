@@ -17,13 +17,15 @@ const SearchInput = styled.input`
   border: 0;
 `;
 
-const SearchButton = styled.button`
+const SearchButton = styled.button<{ isLoading?: boolean }>`
   width: 100%;
-  background-color: darkcyan;
+  background-color: ${({isLoading}) => isLoading ? "gray" : "#1565c0"};
   border-radius: 6px;
   color: white;
   font-weight: 700;
   text-transform: uppercase;
+  border: 0;
+  cursor: ${({isLoading}) => isLoading ? "not-allowed" : "pointer"};
 `;
 
 interface SearchBarProps {
@@ -34,6 +36,7 @@ interface SearchBarProps {
 const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
     const [input, setInput] = useState<string>("4600 Silver Hill Rd, Washington, Dc, 20233");
     const [isRefresh, setIsRefresh] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [coordinates, setCoordinates] = useState<{ longitude: string, latitude: string }>();
     const [forecastAddress, setForecastAddress] = useState<string>("");
 
@@ -45,6 +48,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
     const handleSubmit = (event) => {
         // do something
         event.preventDefault();
+        setIsLoading(true);
         const formattedInput = input.replaceAll(" ", "+");
         const address = `https://cors-anywhere.herokuapp.com/https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
         fetch(address, {
@@ -59,6 +63,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
                 console.log(error)
             }).finally(() => {
             setIsRefresh(true);
+            setIsLoading(false);
         });
     }
 
@@ -110,7 +115,11 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
     return (
         <Form onSubmit={handleSubmit}>
             <SearchInput type="text" name="location" onChange={handleChange} value={input}/>
-            <SearchButton type="submit">{isRefresh ? "Refresh" : "Search"}</SearchButton>
+            <SearchButton type="submit"
+                          disabled={isLoading}
+                          isLoading={isLoading}>
+                {isLoading ? "Loading" : isRefresh ? "Refresh" : "Search"}
+            </SearchButton>
         </Form>
     )
 }
