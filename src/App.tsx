@@ -32,8 +32,8 @@ const ImageAttributions = styled.div`
 `;
 
 const App = () => {
-    const [forecast, setForecast] = useState<Record<string, any>>();
-    const [city, setCity] = useState<string>();
+    const [forecast, setForecast] = useState<Record<string, any> | null>();
+    const [city, setCity] = useState<string | null>();
     const {shortForecast} = forecast?.properties?.periods?.[0] || {};
     const bgImage = getWeatherBgImage(shortForecast);
 
