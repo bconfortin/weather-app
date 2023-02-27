@@ -1,18 +1,16 @@
 import styled from "styled-components";
-import {FlexContainer} from "../globalStyles";
 
-const WeekForecastContainer = styled(FlexContainer)`
-  justify-content: space-between;
-  flex-wrap: wrap;
+const WeekForecastContainer = styled.div`
+  display: grid;
   grid-gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
 `;
 
 const WeekForecastCard = styled.div`
   padding: 16px;
   border-radius: 16px;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
-  min-width: 130px;
-  max-width: 130px;
+  width: 100%;
   background-color: #fff;
 `;
 

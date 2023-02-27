@@ -4,13 +4,19 @@ const ForecastBanner = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: auto auto 1fr;
-  grid-gap: 30px;
+  grid-gap: 32px;
   margin-bottom: 24px;
   padding: 32px;
   border-radius: 16px;
   box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   align-items: center;
+
+  @media (max-width: 1140px) {
+    grid-gap: 16px;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
 `;
 
 const ForecastBannerTemperature = styled.div`
@@ -19,12 +25,25 @@ const ForecastBannerTemperature = styled.div`
     justify-content: flex-start;
     font-size: 32px;
     font-weight: 700;
+    padding-right: 32px;
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
 
     > span {
-      position: relative;
-      top: -4px;
       font-size: 64px;
       font-weight: 800;
+    }
+  }
+
+  @media (max-width: 1140px) {
+    grid-column: 1;
+    grid-row: 1;
+
+    > div {
+      padding-right: 16px;
+
+      > span {
+        font-size: 48px;
+      }
     }
   }
 `;
@@ -32,6 +51,11 @@ const ForecastBannerTemperature = styled.div`
 const ForecastBannerConditions = styled.div`
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
+
+  @media (max-width: 1140px) {
+    grid-column: 2;
+    grid-row: 1;
+  }
 `;
 
 const ForecastBannerCity = styled.div`
@@ -42,6 +66,21 @@ const ForecastBannerCity = styled.div`
   > h1 {
     font-size: 64px;
     font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 1400px) {
+    padding-left: 0;
+  }
+
+  @media (max-width: 1140px) {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    text-align: left;
+
+    > h1 {
+      font-size: 32px;
+    }
   }
 `;
 
