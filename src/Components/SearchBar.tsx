@@ -70,9 +70,9 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
         event.preventDefault();
         cleanupBeforeSearching();
 
-        const formattedInput = input.replaceAll(" ", "+");
+        const formattedInput = input?.replaceAll(" ", "+");
         // Running into cors issues in dev mode, so I used this website as a proxy.
-        const address = `${process.env.NODE_ENV !== "production" ? "https://cors-anywhere.herokuapp.com/" : ""}https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
+        const address = `${process.env.NODE_ENV === "development" ? "https://cors-anywhere.herokuapp.com/" : ""}https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
         fetch(address, {
             method: 'GET',
         })
@@ -97,7 +97,6 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
     useEffect(() => {
         if (!!coordinates?.latitude && !!coordinates?.longitude) {
             const address = `https://api.weather.gov/points/${coordinates?.latitude},${coordinates?.longitude}`;
-            console.log(address);
             fetch(address, {
                 method: 'GET',
             })
@@ -117,7 +116,6 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
 
     useEffect(() => {
         if (!!forecastAddress) {
-            console.log(forecastAddress);
             fetch(forecastAddress, {
                 method: 'GET',
             })

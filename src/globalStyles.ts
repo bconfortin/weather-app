@@ -5,7 +5,7 @@ export const BackgroundContainer = styled.div<{ bgImage?: string }>`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background-image: url(${({bgImage}) => bgImage ? bgImage : ""});
+  ${({bgImage}) => bgImage && `background-image: url(${bgImage});`}
   background-repeat: no-repeat;
   background-size: cover;
 `;

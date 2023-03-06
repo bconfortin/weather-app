@@ -38,7 +38,7 @@ const App = () => {
     const bgImage = getWeatherBgImage(shortForecast);
 
     return (
-        <BackgroundContainer bgImage={bgImage}>
+        <BackgroundContainer bgImage={bgImage} data-testid="bg-container">
             <ContentContainer>
                 <SearchBar setForecast={setForecast} setCity={setCity}/>
                 {!!forecast && !!city && <WeatherBanner forecast={forecast} city={city}/>}
