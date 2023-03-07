@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Dispatch, useCallback, useEffect, useState} from "react";
-import {getSearchButtonIcon} from "../utils";
+import {getGeolocationUrl, getSearchButtonIcon, getWeatherPointsUrl} from "../utils";
 
 const Form = styled.form`
   width: 100%;
@@ -70,10 +70,10 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
         event.preventDefault();
         cleanupBeforeSearching();
 
-        const formattedInput = input?.replaceAll(" ", "+");
         // Running into cors issues in dev mode, so I used this website as a proxy.
-        const address = `${process.env.NODE_ENV === "development" ? "https://cors-anywhere.herokuapp.com/" : ""}https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${formattedInput}&benchmark=2020&format=json`;
-        fetch(address, {
+        const url = getGeolocationUrl(input);
+
+        fetch(url, {
             method: 'GET',
         })
             .then((response) => response.json())
@@ -84,20 +84,23 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
                     setErrorMessage("No matches for this address.");
                 }
                 const {x: longitude, y: latitude} = data?.result?.addressMatches?.[0]?.coordinates || {};
-                if (!!longitude && !!latitude) setCoordinates({longitude, latitude});
+                if (!!longitude && !!latitude) {
+                    setIsRefresh(true);
+                    setCoordinates({longitude, latitude});
+                }
             })
             .catch((error) => {
                 console.log(error);
             }).finally(() => {
-            setIsRefresh(true);
             setIsLoading(false);
         });
     }
 
     useEffect(() => {
         if (!!coordinates?.latitude && !!coordinates?.longitude) {
-            const address = `https://api.weather.gov/points/${coordinates?.latitude},${coordinates?.longitude}`;
-            fetch(address, {
+            const url = getWeatherPointsUrl({latitude: coordinates.latitude, longitude: coordinates.longitude});
+
+            fetch(url, {
                 method: 'GET',
             })
                 .then((response) => response ? response.json() : {})
@@ -112,7 +115,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
                     console.log(error)
                 });
         }
-    }, [coordinates]);
+    }, [coordinates, setCity, setForecast]);
 
     useEffect(() => {
         if (!!forecastAddress) {
@@ -135,7 +138,7 @@ const SearchBar = ({setForecast, setCity}: SearchBarProps): JSX.Element => {
                     console.log(error)
                 });
         }
-    }, [forecastAddress]);
+    }, [forecastAddress, setForecast]);
 
     return (
         <div>

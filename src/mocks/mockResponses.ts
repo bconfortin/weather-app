@@ -11,6 +11,12 @@ export const coordinatesApiResponse = {
     }
 };
 
+export const coordinatesApiErrorResponse = {
+    result: {
+        addressMatches: []
+    }
+};
+
 export const weatherPointsApiResponse = {
     properties: {
         forecast: "https://api.weather.gov/gridpoints/LWX/101,70/forecast",

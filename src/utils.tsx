@@ -34,3 +34,12 @@ export const getSearchButtonIcon = (isLoading: boolean, isRefresh: boolean): JSX
         return <FontAwesomeIcon icon="magnifying-glass"/>
     }
 }
+
+export const getGeolocationUrl = (input: string = ""): string => {
+    const formattedInput = input?.replaceAll(" ", "+");
+    return `${process.env.NODE_ENV === "development" ? process.env.REACT_APP_CORS_ANYWHERE_URL : ""}${process.env.REACT_APP_GEOLOCATION_API_URL}?address=${formattedInput}&benchmark=2020&format=json`
+}
+
+export const getWeatherPointsUrl = ({latitude, longitude}: { latitude: string, longitude: string }): string => {
+    return `${process.env.REACT_APP_WEATHER_API_POINTS_URL}${latitude},${longitude}`
+}
